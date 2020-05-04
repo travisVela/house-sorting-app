@@ -10,6 +10,7 @@ Answer(this.selectHandler, this.answerText);
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: RaisedButton(
         color: Colors.blue,
         textColor: Colors.white,
