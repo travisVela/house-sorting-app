@@ -13,30 +13,58 @@ class HouseSortingApp extends StatefulWidget {
 }
 
 class _HouseSortingAppState extends State<HouseSortingApp> {
-  var _questionIndex = 0;
 
-  final _questions = [
+  final _questions = const [
     {
       'questionText': 'Which color do you prefer?',
-      'answers': ['Red', 'Blue', 'Green', 'Yellow']
+      'answers': [
+        {'text': 'Red', 'score': 4},
+        {'text': 'Blue', 'score': 3},
+        {'text': 'Green', 'score': 1},
+        {'text': 'Yellow', 'score': 2}
+      ]
     },
     {
       'questionText': 'Which animal do you like best?',
-      'answers': ['Badger', 'Snake', 'Raven', 'Lion']
+      'answers': [
+        {'text': 'Badger', 'score': 2},
+        {'text': 'Snake', 'score': 1},
+        {'text': 'Raven', 'score': 3},
+        {'text': 'Lion', 'score': 4}
+      ]
     },
     {
       'questionText': 'Which describes you best?',
-      'answers': ['Inquisitive', 'Doubtful', 'Brave', 'Joyful']
+      'answers': [
+        {'text': 'Inquisitive', 'score': 3},
+        {'text': 'Doubtful', 'score': 1},
+        {'text': 'Brave', 'score': 4},
+        {'text': 'Joyful', 'score': 2}
+      ]
     }
   ];
 
-  void _answerQuestion() {
+  var _questionIndex = 0;
+  var _totalScore = 0;
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
+    print(score);
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
     if (_questionIndex < _questions.length) {
       print('more questions');
+    } else {
+      print('no more questions!');
     }
   }
 
@@ -50,10 +78,10 @@ class _HouseSortingAppState extends State<HouseSortingApp> {
         body: _questionIndex < _questions.length
             ? Quiz(
                 answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
                 questions: _questions,
-                questionIndex: _questionIndex
               )
-            : Result()
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
